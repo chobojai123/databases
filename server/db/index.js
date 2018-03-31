@@ -19,20 +19,4 @@ dbConnection.connect(function(err) {
   console.log('Connected!');
 });
 
-exports.dbQuery = function() {
-  dbConnection.query('SELECT * FROM messages', function (err, result, field) {
-    if (err) {
-      throw err;
-    }
-    console.log(result);
-  });
-};
-
-exports.dbPost = function(user, timeCreated) {
-  dbConnection.query(`INSERT INTO messages (text, createdAt) VALUES (${user}, ${timeCreated})`, function (err, result, field) {
-    if (err) {
-      throw err;
-    }
-    console.log(result);
-  });
-};
+modules.exports = dbConnection;
