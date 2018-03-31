@@ -3,10 +3,20 @@ var db = require('../db');
 module.exports = {
   messages: {
     get: function () {
-      db.dbQuery();
+      db.query('SELECT * FROM messages', function (err, result, field) {
+        if (err) {
+          throw err;
+        }
+        console.log(result);
+      });
     }, // a function which produces all the messages
     post: function () {
-      db.dbPost();
+      db.query(`INSERT INTO messages (text, createdAt) VALUES (${user}, ${timeCreated})`, function (err, result, field) {
+        if (err) {
+          throw err;
+        }
+        console.log(result);
+      });
     } // a function which can be used to insert a message into the database
   },
 
