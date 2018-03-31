@@ -12,11 +12,42 @@ var headers = {
 module.exports = {
   messages: {
     get: function (req, res) {
-      var statusCode = 200;
-      response.writeHead(statusCode, headers);
-      response.end(JSON.stringify(data));
+      models.messages.get(function(data) {
+        // var message = {};
+        // var testdata = [{
+        //   username: 'Joe',
+        //   text: 'hi',
+        //   roomname: 'lobby',
+        // },
+        // { username: 'Tom',
+        //   text: 'test',
+        //   roomname: 'lobby',
+        // }]
+        // message.results = testdata
+        var message = {};
+        message.results = [];
+        data.forEach(obj => {
+          message.results.push({
+            'username': obj.username,
+            'text': obj.message,
+            'roomname': obj.roomname,
+            'createdAt': obj.createdAt,
+            'objectId': obj.id
+          });
+        });
+        // var statusCode = 200;
+        // var headers = {'Content-Type': 'application/json'};
+        // res.writeHead(statusCode, headers);
+        // res.end(JSON.stringify(message));
+        res.send(message);
+      });
     }, // a function which handles a get request for all messages
-    post: function (req, res) {} // a function which handles posting a message to the database
+    post: function (req, res) {
+      var data = req.body;
+      models.messages.post(data, function(data) {
+        res.send();
+      });
+    } // a function which handles posting a message to the database
   },
 
   users: {
